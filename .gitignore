@@ -7,3 +7,4 @@ db/platform.db
 db/platform.db-journal
 .env
 *.log
+*.docx
