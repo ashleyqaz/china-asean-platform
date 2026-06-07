@@ -34,7 +34,7 @@ export default defineNuxtConfig({
 
   // ========== Nitro 服务端引擎配置 ==========
   nitro: {
-    preset: 'static',              // 全站静态生成模式
+    preset: 'node-server',         // 混合模式：预渲染页面静态生成 + API 动态运行
     prerender: {
       crawlLinks: true,            // 自动爬取页面中的链接并预渲染
       routes: [
@@ -93,18 +93,6 @@ export default defineNuxtConfig({
   // ========== 全局 CSS ==========
   css: ['~/assets/css/variables.css', '~/assets/css/global.css'],
 
-  // ========== 生成配置 ==========
-  generate: {
-    // 爬虫自动发现更多路由
-    crawler: true
-  },
-
   // ========== Vite 配置 ==========
-  vite: {
-    css: {
-      preprocessorOptions: {
-        css: {}
-      }
-    }
-  }
+  vite: {}
 })

@@ -1,0 +1,16 @@
+node_modules/
+.output/
+.data/
+dist/
+.nuxt/
+db/platform.db
+db/platform.db-journal
+.env
+*.log
+*.docx
+.git/
+.gitignore
+Dockerfile
+.dockerignore
+docker-compose*.yml
+README.md
