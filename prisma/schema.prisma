@@ -1,0 +1,238 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = "file:../db/platform.db"
+}
+
+model Admin {
+  id           Int      @id @default(autoincrement())
+  username     String   @unique
+  passwordHash String   @map("password_hash")
+  createdAt    DateTime @default(now()) @map("created_at")
+
+  @@map("admins")
+}
+
+model NavMenu {
+  id         Int      @id @default(autoincrement())
+  name       String
+  slug       String   @unique
+  sortOrder  Int      @default(0) @map("sort_order")
+  isHighlight Boolean @default(false) @map("is_highlight")
+  isVisible  Boolean  @default(true) @map("is_visible")
+  createdAt  DateTime @default(now()) @map("created_at")
+  updatedAt  DateTime @updatedAt @map("updated_at")
+
+  @@map("nav_menus")
+}
+
+model CarouselItem {
+  id        Int      @id @default(autoincrement())
+  imageUrl  String   @map("image_url")
+  title     String   @default("")
+  caption   String   @default("")
+  linkUrl   String?  @map("link_url")
+  sortOrder Int      @default(0) @map("sort_order")
+  isVisible Boolean  @default(true) @map("is_visible")
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+
+  @@map("carousel_items")
+}
+
+model NewsArticle {
+  id          Int      @id @default(autoincrement())
+  title       String
+  content     String
+  summary     String?
+  coverImage  String?  @map("cover_image")
+  categorySlug String? @map("category_slug")
+  subCategoryId Int?   @map("sub_category_id")
+  publishTime DateTime @default(now()) @map("publish_time")
+  isPublished Boolean  @default(true) @map("is_published")
+  createdAt   DateTime @default(now()) @map("created_at")
+  updatedAt   DateTime @updatedAt @map("updated_at")
+
+  @@map("news_articles")
+}
+
+model SubCategory {
+  id        Int      @id @default(autoincrement())
+  menuSlug  String   @map("menu_slug")
+  name      String
+  sortOrder Int      @default(0) @map("sort_order")
+  createdAt DateTime @default(now()) @map("created_at")
+
+  @@map("sub_categories")
+}
+
+model UnitCategory {
+  id        Int           @id @default(autoincrement())
+  name      String
+  sortOrder Int           @default(0) @map("sort_order")
+  createdAt DateTime      @default(now()) @map("created_at")
+  units     SupportUnit[]
+
+  @@map("unit_categories")
+}
+
+model SupportUnit {
+  id         Int          @id @default(autoincrement())
+  categoryId Int          @map("category_id")
+  category   UnitCategory @relation(fields: [categoryId], references: [id])
+  name       String
+  logoUrl    String?      @map("logo_url")
+  websiteUrl String?      @map("website_url")
+  sortOrder  Int          @default(0) @map("sort_order")
+  createdAt  DateTime     @default(now()) @map("created_at")
+  updatedAt  DateTime     @updatedAt @map("updated_at")
+
+  @@map("support_units")
+}
+
+model ContactInfo {
+  id        Int      @id @default(autoincrement())
+  keyName   String   @unique @map("key_name")
+  value     String   @default("")
+  updatedAt DateTime @updatedAt @map("updated_at")
+
+  @@map("contact_info")
+}
+
+model QrcodeConfig {
+  id        Int      @id @default(autoincrement())
+  imageUrl  String   @default("") @map("image_url")
+  updatedAt DateTime @updatedAt @map("updated_at")
+
+  @@map("qrcode_config")
+}
+
+model SiteConfig {
+  id           Int      @id @default(autoincrement())
+  siteName     String   @default("") @map("site_name")
+  copyrightText String  @default("") @map("copyright_text")
+  icpNumber    String   @default("") @map("icp_number")
+  updatedAt    DateTime @updatedAt @map("updated_at")
+
+  @@map("site_config")
+}
+
+model User {
+  id           Int       @id @default(autoincrement())
+  phone        String    @unique
+  passwordHash String    @map("password_hash")
+  realName     String    @map("real_name")
+  idCard       String    @map("id_card")
+  createdAt    DateTime  @default(now()) @map("created_at")
+  messages     Message[]
+
+  @@map("users")
+}
+
+model SmsCode {
+  id        Int      @id @default(autoincrement())
+  phone     String
+  code      String
+  expiresAt DateTime @map("expires_at")
+
+  @@map("sms_codes")
+}
+
+model Message {
+  id          Int       @id @default(autoincrement())
+  userId      Int?      @map("user_id")
+  user        User?     @relation(fields: [userId], references: [id])
+  category    String
+  senderName  String    @map("sender_name")
+  senderEmail String?   @map("sender_email")
+  senderPhone String?   @map("sender_phone")
+  title       String    @default("")
+  content     String
+  attachment  String?   @default("")
+  isRead      Boolean   @default(false) @map("is_read")
+  reply       String?
+  repliedAt   DateTime? @map("replied_at")
+  createdAt   DateTime  @default(now()) @map("created_at")
+
+  @@map("messages")
+}
+
+model AboutPage {
+  id        Int      @id @default(autoincrement())
+  content   String   @default("")
+  updatedAt DateTime @updatedAt @map("updated_at")
+
+  @@map("about_page")
+}
+
+model CategoryContent {
+  id        Int      @id @default(autoincrement())
+  slug      String   @unique
+  content   String   @default("")
+  updatedAt DateTime @updatedAt @map("updated_at")
+
+  @@map("category_contents")
+}
+
+model Download {
+  id            Int      @id @default(autoincrement())
+  title         String
+  category      String
+  fileUrl       String   @map("file_url")
+  fileSize      String   @default("") @map("file_size")
+  description   String   @default("")
+  downloadCount Int      @default(0) @map("download_count")
+  createdAt     DateTime @default(now()) @map("created_at")
+
+  @@map("downloads")
+}
+
+model Expert {
+  id           Int      @id @default(autoincrement())
+  name         String
+  title        String   @default("")
+  avatarUrl    String   @default("") @map("avatar_url")
+  organization String   @default("")
+  field        String   @default("")
+  bio          String   @default("")
+  sortOrder    Int      @default(0) @map("sort_order")
+  createdAt    DateTime @default(now()) @map("created_at")
+
+  @@map("experts")
+}
+
+model Project {
+  id          Int      @id @default(autoincrement())
+  name        String
+  participants String  @default("")
+  startDate   String?  @map("start_date")
+  endDate     String?  @map("end_date")
+  description String   @default("")
+  coverImage  String?  @map("cover_image")
+  isFeatured  Boolean  @default(false) @map("is_featured")
+  createdAt   DateTime @default(now()) @map("created_at")
+
+  @@map("projects")
+}
+
+model Subscriber {
+  id           Int      @id @default(autoincrement())
+  email        String   @unique
+  isActive     Boolean  @default(true) @map("is_active")
+  subscribedAt DateTime @default(now()) @map("subscribed_at")
+
+  @@map("subscribers")
+}
+
+model Notification {
+  id        Int      @id @default(autoincrement())
+  userId    Int      @map("user_id")
+  message   String
+  isRead    Boolean  @default(false) @map("is_read")
+  createdAt DateTime @default(now()) @map("created_at")
+
+  @@map("notifications")
+}

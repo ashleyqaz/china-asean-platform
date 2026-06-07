@@ -1,0 +1,54 @@
+:root {
+  /* Backgrounds — pure white */
+  --color-bg: #ffffff;
+  --color-bg-light: #f5f6f8;
+  --color-bg-card: #ffffff;
+
+  /* Header & Footer — deep warm espresso */
+  --color-header-bg: #2c2219;
+  --color-header-text: #f5f0e8;
+  --color-footer-bg: #2c2219;
+  --color-footer-text: #b8aa94;
+
+  /* Accent / Brand — burnt terracotta */
+  --color-accent: #b87235;
+  --color-accent-hover: #944f1a;
+  --color-accent-light: #faf0e5;
+  --color-on-accent: #ffffff;
+
+  /* Text — warm charcoal tones */
+  --color-text: #3d3226;
+  --color-text-secondary: #6b5d4e;
+  --color-text-muted: #978c7a;
+  --color-placeholder: #b5a995;
+
+  /* Borders & Dividers */
+  --color-border: #e5dfd4;
+
+  /* Table & UI support */
+  --color-table-header: #f7f4f0;
+  --color-danger-bg: #fdf0ed;
+  --color-warning-bg: #fef9e7;
+
+  /* Status colors */
+  --color-success: #5a8a4a;
+  --color-error: #c0503a;
+  --color-warning: #c88830;
+
+  /* Typography */
+  --font-stack: -apple-system, BlinkMacSystemFont, "Helvetica Neue", "PingFang SC",
+    "Microsoft YaHei", "Segoe UI", sans-serif;
+
+  /* Layout */
+  --max-width: 1200px;
+  --carousel-width: 640px;
+  --carousel-height: 400px;
+
+  /* Motion */
+  --transition-fast: 0.2s ease;
+  --transition-normal: 0.3s ease;
+
+  /* Radii */
+  --radius-sm: 4px;
+  --radius-md: 8px;
+}
